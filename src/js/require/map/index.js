@@ -13,6 +13,7 @@ const template = data => `<div class="map__overlay js-overlay">
     </div>`;
 
 let map,
+    userLocation,
     data;
 
 //get 
@@ -20,7 +21,6 @@ const getData = () => {
     fetch('/data.json')
         .then(res => res.json())
         .then(json => {
-            console.log(json);
             data = json;
         })
         .catch(err => {
@@ -69,6 +69,7 @@ const initMap = () => {
             "circle-color": "#007cbf"
         }
     });
+    addUser();
 };
 
 const dataMassage = data => data.map(datum => {
@@ -126,8 +127,11 @@ const plotLocations = () => {
 
 const addUser = () => {
     if(!userLocation) return;
-    
-    // map.getSource('single-point').setData([userLocation);
+    console.log(userLocation);
+    map.getSource('single-point').setData({
+        "type": "Point",
+        "coordinates": [userLocation.coords.longitude, userLocation.coords.latitude]
+    });
     
 };
 
@@ -154,17 +158,18 @@ export default () => {
     Load(CONSTANTS.MAPBOX.API_SRC)
         .then(() => {
 
-            getData();
-            initMap();
-
             getLocation()
                 .then(pos => {
-                    console.log(pos);
-
+                    userLocation = pos;
                 })
                 .catch(err => {
                     console.log(err);
                 });
+                
+            getData();
+            initMap();
+
+            
 
         })
         .catch(err => {

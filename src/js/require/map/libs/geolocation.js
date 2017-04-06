@@ -14,7 +14,6 @@ export const getLocation = () => {
             }
             navigator.geolocation.getCurrentPosition(resolve, reject, config);
 		});
-    
 };
 
 //Geometry

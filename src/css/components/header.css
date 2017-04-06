@@ -1,0 +1,13 @@
+.banner {
+    position: fixed;
+    left:0;
+    right:0;
+    height:45px;
+    z-index:2;
+    background:rgba(0,0,0, 95);
+    padding:10px var(--gutter);
+}
+.banner__logo {
+    color:#fff;
+    font-weight:normal;
+}

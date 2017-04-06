@@ -1,0 +1,29 @@
+.map,
+.map__overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:1;
+    background:#323432;
+}
+.mapboxgl-map {
+    width:100%;
+    height:100%;
+}
+.map__overlay {
+    top:calc(var(--baseline) / 2);
+    left:calc(var(--gutter) / 2);
+    right:calc(var(--gutter) / 2);
+    bottom:calc(var(--baseline) / 2);
+    z-index:2;
+    color:#fff;
+    background:rgba(0,0,0, .75);
+    padding:var(--baseline) var(--gutter);
+}
+.map__overlay-close {
+    position: fixed;
+    bottom:calc(var(--baseline) * 2);
+    right:calc(var(--gutter) * 2);
+}

@@ -13,7 +13,7 @@ module.exports = {
 		app: APP_FILE_PATH,
 	},
 	output: {
-		path: path.resolve('build/'),
+		path: path.resolve('public/'),
 		filename: 'index.js',
 		sourceMapFilename: '[file].map',
 	},

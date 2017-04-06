@@ -14,6 +14,7 @@ const template = data => `<div class="map__overlay js-overlay">
 
 let map,
     userLocation,
+    userLocationMarker,
     data;
 
 //get 
@@ -39,37 +40,26 @@ const initMap = () => {
     });
 
     let nav = new mapboxgl.NavigationControl();
-    map.addControl(new mapboxgl.AttributionControl(), 'bottom-left');
     map.addControl(nav, 'bottom-right');
+    
 
     map.on('load', plotLocations);
     // map.on('load', () => {
     //     dataMassage(data).forEach(addMarker);
     // });
-    map.on('click', handleMapClick);
-    // map.on('mousemove', handleMapClickfunction (e) {
-    //     let features = map.queryRenderedFeatures(e.point, { layers: ['places'] });
-    //     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
-    // });
+    
 
-    map.addSource('single-point', {
-        "type": "geojson",
-        "data": {
-            "type": "FeatureCollection",
-            "features": []
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true,
+            timeout:6000
         }
-    });
+    }).on('geolocate', pos => {
+        addUser(pos)
+    }));
 
-    map.addLayer({
-        "id": "point",
-        "source": "single-point",
-        "type": "circle",
-        "paint": {
-            "circle-radius": 5,
-            "circle-color": "#007cbf"
-        }
-    });
-    addUser();
+    //userLocation && addUser(userLocation);
+    
 };
 
 const dataMassage = data => data.map(datum => {
@@ -80,8 +70,7 @@ const dataMassage = data => data.map(datum => {
             "postcode": datum['Postcode'],
             "site": datum['Site'],
             "facilities": datum['Play facilities'],
-            "icon": "playground",
-            "iconSize": [40, 40]
+            "iconSize": [24, 24]
         },
         "geometry": {
             "type": "Point",
@@ -106,32 +95,64 @@ const plotLocations = () => {
                 "icon-allow-overlap": true
             }
         });
+
+
+        dataMassage(data).forEach(function(marker) {
+            var el = document.createElement('div');
+            el.className = 'marker';
+            el.style.backgroundImage = 'url(/img/park.svg)';
+            el.style.width = '24px';
+            el.style.height = '24px';
+
+            el.addEventListener('click', function() {
+                addOverlay(marker.properties);
+            });
+
+            new mapboxgl.Marker(el, {offset: [-marker.properties.iconSize[0] / 2, -marker.properties.iconSize[1] / 2]})
+                .setLngLat(marker.geometry.coordinates)
+                .addTo(map);
+        });
+
+        map.on('click', handleMapClick);
 };
 
-// const addMarker = marker => {
-//     let el = document.createElement('div');
-//     el.className = 'marker';
-//     el.style.backgroundImage = 'url(https://placekitten.com/g/40/40)';
-//     el.style.width = '40px';
-//     el.style.height = '40px';
-
-//     el.addEventListener('click', function() {
-//         console.log(eature.properties.facilities);
-//     });
-
-//     // add marker to map
-//     new mapboxgl.Marker(el, {})
-//         .setLngLat(marker.geometry.coordinates)
-//         .addTo(map);
-// };
-
-const addUser = () => {
-    if(!userLocation) return;
-    console.log(userLocation);
-    map.getSource('single-point').setData({
+const addUser = (pos) => {
+    
+    if(userLocationMarker) {
+        userLocationMarker.setLngLat([pos.coords.longitude, pos.coords.latitude])
+    }
+    var el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage = 'url(/img/user.svg)';
+    el.style.width = '24px';
+    el.style.height = '24px';
+    	
+    userLocationMarker = new mapboxgl.Marker(el)
+        .setLngLat([pos.coords.longitude, pos.coords.latitude])
+        .addTo(map);
+    //remove element??
+    /*
+    map.addSource('user', { type: 'geojson', data: {
         "type": "Point",
-        "coordinates": [userLocation.coords.longitude, userLocation.coords.latitude]
+        "coordinates": [-74.50, 40]
+    }});
+
+    map.addLayer({
+        "id": "user-marker",
+        "type": "symbol",
+        "source": "user",
+        "layout": {
+            "icon-image": "airport-15",
+            "icon-rotation-alignment": "map"
+        }
     });
+
+    map.getSource('drone').setData({
+        "type": "Point",
+        "coordinates": [pos.coords.longitude, pos.coords.latitude]
+    });
+*/
+      
     
 };
 

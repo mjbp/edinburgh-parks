@@ -5,12 +5,10 @@ import Map from './require/map';
 
 //when DOMContentLoaded, run these tasks
 const onDOMContentLoadedTasks = [
-	Map
+	Map,
+	() => {
+		if ('serviceWorker' in navigator) window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js') });
+	}
 ];
-
-//when page Loaded, run these tasks
-const onLoadTasks = [
-];
-
 if('addEventListener' in window)
     !!onDOMContentLoadedTasks.length && window.addEventListener('DOMContentLoaded', () => { onDOMContentLoadedTasks.forEach((fn) => fn()); });

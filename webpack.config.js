@@ -12,6 +12,7 @@ module.exports = {
 	entry: {
 		app: APP_FILE_PATH,
 	},
+	devtool: 'source-map',
 	output: {
 		path: path.resolve('public/'),
 		filename: 'index.js',
@@ -31,7 +32,6 @@ module.exports = {
 	module: {
 		rules: [{
 			test: /\.js$/,
-			exclude: [/node_modules/],
 			use: [{
 				loader: 'babel-loader',
 				options: { presets: ['es2015'] }
@@ -65,7 +65,10 @@ module.exports = {
                 minifyCSS: true,
                 minifyURLs: true
             }
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			include: /\.min\.js$/,
+			minimize: true
 		})
 	],
-	devtool: "cheap-eval-source-map"
 };

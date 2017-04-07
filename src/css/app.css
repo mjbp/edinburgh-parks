@@ -13,3 +13,4 @@
 
 /* Plugins */
 @import "plugins/mapbox-gl.css";
+@import "plugins/mapbox-gl-directions.css";

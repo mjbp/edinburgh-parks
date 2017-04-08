@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "70872486dabc5578e7d5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "482f166435d7bde7fd31"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotMainModule = true; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -724,7 +724,7 @@ exports.default = {
         TOKEN: 'pk.eyJ1IjoibWpicCIsImEiOiJjajE3bWN5emEwMDM2MndwaTIyaDM0MzI0In0.xjz0mBZ1EFUHBSoIT0UUlQ',
         API_SRC: ['https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.1/mapbox-gl-directions.js'],
         CONTAINER_ID: 'map',
-        DEFAULT_LNG_LAT: [-4.3261988, 55.8499846]
+        DEFAULT_LNG_LAT: [-3.1880175, 55.9748066]
     },
     DATA: './data.json'
 };
@@ -894,6 +894,7 @@ exports.default = function () {
         getData();
         initMap();
         (0, _geolocation.getLocation)().then(function (pos) {
+            console.log(pos);
             map && map.setCenter([pos.coords.longitude, pos.coords.latitude]);
             userLocation = [pos.coords.longitude, pos.coords.latitude];
         });

@@ -1,6 +1,6 @@
 import CONSTANTS from '../../constants';
 import Load from 'storm-load';
-//import { calculateDistance, getLocation } from './libs/geolocation';
+import { getLocation } from './libs/geolocation';
 
 const template = data => `<div class="map__overlay js-overlay">
         <div class="map__overlay-row map__heading">${data.site}</div>
@@ -43,7 +43,7 @@ const initMap = () => {
     map = new mapboxgl.Map({
         container: CONSTANTS.MAPBOX.CONTAINER_ID,
         style:'mapbox://styles/mapbox/dark-v9',
-        center: CONSTANTS.MAPBOX.DEFAULT_LAT_LNG,
+        center: CONSTANTS.MAPBOX.DEFAULT_LNG_LAT,
         zoom: 13,
     });
 
@@ -76,7 +76,7 @@ const initDirections = (coords) => {
     });
 
     directionControl = map.addControl(directions, 'top-left');
-    directions.setOrigin(userLocation || CONSTANTS.MAPBOX.DEFAULT_LAT_LNG);
+    directions.setOrigin(userLocation || CONSTANTS.MAPBOX.DEFAULT_LNG_LAT);
     directions.setDestination(coords);
 
     directions.on('route', function(e) {
@@ -162,6 +162,12 @@ export default () => {
         .then(() => {
             getData();
             initMap();
+            getLocation()
+                .then(pos => {
+                    console.log(pos);
+                    map && map.setCenter([pos.coords.longitude, pos.coords.latitude]);
+                    userLocation = [pos.coords.longitude, pos.coords.latitude];
+                });
         })
         .catch(err => {
             console.warn();

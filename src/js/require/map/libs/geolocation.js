@@ -1,5 +1,3 @@
-let timer;
-
 const config = {
     enableHighAccuracy: true,
     maximumAge: 5000
@@ -33,9 +31,5 @@ const metresToMiles = m => m * 0.000621371192;
 
 const toRad = value => value * Math.PI / 180;
 
-/**
- * math util to convert radians to latlong/degrees
- * @param value
- * @returns {number}
- */
+// Math util to convert radians to latlong/degrees
 const toDeg = value => value * 180 / Math.PI;

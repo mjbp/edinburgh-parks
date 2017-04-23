@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "482f166435d7bde7fd31"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a27e60db6f516e86df64"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotMainModule = true; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -777,7 +777,7 @@ var initMap = function initMap() {
 
     map = new mapboxgl.Map({
         container: _constants2.default.MAPBOX.CONTAINER_ID,
-        style: 'mapbox://styles/mapbox/dark-v9',
+        style: 'mapbox://styles/mapbox/bright-v9',
         center: _constants2.default.MAPBOX.DEFAULT_LNG_LAT,
         zoom: 13
     });

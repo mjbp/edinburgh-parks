@@ -42,7 +42,7 @@ const initMap = () => {
 
     map = new mapboxgl.Map({
         container: CONSTANTS.MAPBOX.CONTAINER_ID,
-        style:'mapbox://styles/mapbox/dark-v9',
+        style:'mapbox://styles/mapbox/bright-v9',
         center: CONSTANTS.MAPBOX.DEFAULT_LNG_LAT,
         zoom: 13,
     });
